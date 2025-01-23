@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitation Card</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('https://wallpapers.com/images/hd/boho-computer-mrk2tcmew5xsj23k.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .curtain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, #4a4a4a, #2e2e2e);
+            z-index: 10;
+            transition: transform 1s ease-in-out;
+            transform: translateY(0);
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 20;
+        }
+
+        .envelope {
+            width: 200px;
+            height: 120px;
+            background-color: #fff;
+            border: 2px solid #d1a15c;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .ribbon {
+            width: 100%;
+            height: 30px;
+            background-color: #d1a15c;
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+            position: absolute;
+            top: -15px;
+            left: 0;
+            border-radius: 5px;
+        }
+
+        .choice-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .choice-container button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            background-color: #0078d7;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .choice-container button:hover {
+            background-color: #005bb5;
+        }
+
+        .invitation {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #e55337;
+        }
+
+        .invitation-img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+        }
+
+        .balloons {
+            position: fixed;
+            top: -100px;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 30;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 50px;
+            height: 70px;
+            background-color: red;
+            border-radius: 50%;
+            animation: float 5s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-150vh);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .envelope {
+                width: 150px;
+                height: 90px;
+            }
+
+            .choice-container button {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="curtain" id="curtain"></div>
+
+    <div class="envelope" id="envelope">
+        <div class="ribbon" id="ribbon">Put Your Finger Here</div>
+    </div>
+
+    <div class="choice-container" id="choice-container">
+        <button id="students-btn">Students</button>
+        <button id="teachers-btn">Teachers</button>
+    </div>
+
+    <div class="invitation" id="students-invitation">
+        <img src="student invitation.png" alt="Students Invitation" class="invitation-img">
+        <button class="back-button" onclick="goBack()">Go Back</button>
+    </div>
+
+    <div class="invitation" id="teachers-invitation">
+        <img src="teacher invitation.jpg" alt="Teachers Invitation" class="invitation-img">
+        <button class="back-button" onclick="goBack()">Go Back</button>
+    </div>
+
+    <div class="balloons" id="balloons"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const curtain = document.getElementById('curtain');
+            const envelope = document.getElementById('envelope');
+            const choiceContainer = document.getElementById('choice-container');
+            const studentsInvitation = document.getElementById('students-invitation');
+            const teachersInvitation = document.getElementById('teachers-invitation');
+            const balloonsContainer = document.getElementById('balloons');
+
+            // Open the curtain after a short delay
+            setTimeout(() => {
+                curtain.style.transform = 'translateY(-100%)';
+            }, 2000);
+
+            // Click event for the ribbon
+            document.getElementById('ribbon').addEventListener('click', function() {
+                envelope.style.display = 'none';
+                choiceContainer.style.display = 'block';
+            });
+
+            // Students button click event
+            document.getElementById('students-btn').addEventListener('click', function() {
+                choiceContainer.style.display = 'none';
+                studentsInvitation.style.display = 'block';
+                releaseBalloons();
+            });
+
+            // Teachers button click event
+            document.getElementById('teachers-btn').addEventListener('click', function() {
+                choiceContainer.style.display = 'none';
+                teachersInvitation.style.display = 'block';
+                releaseBalloons();
+            });
+
+            // Go back function
+            window.goBack = function() {
+                studentsInvitation.style.display = 'none';
+                teachersInvitation.style.display = 'none';
+                choiceContainer.style.display = 'block';
+                balloonsContainer.innerHTML = ''; // Clear balloons
+            };
+
+            // Function to release balloons
+            function releaseBalloons() {
+                const colors = ['orange', 'red'];
+                for (let i = 0; i < 30; i++) {
+                    const balloon = document.createElement('div');
+                    balloon.className = 'balloon';
+                    balloon.style.left = Math.random() * 100 + 'vw';
+                    balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    balloonsContainer.appendChild(balloon);
+                    balloon.style.animationDuration = Math.random() * 3 + 3 + 's';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
