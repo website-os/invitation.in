@@ -69,26 +69,6 @@
             border-radius: 5px;
         }
 
-        .choice-container {
-            display: none;
-            margin-top: 20px;
-        }
-
-        .choice-container button {
-            padding: 10px 20px;
-            margin: 10px;
-            border: none;
-            background-color: #0078d7;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .choice-container button:hover {
-            background-color: #005bb5;
-        }
-
         .invitation {
             display: none;
             margin-top: 20px;
@@ -148,11 +128,6 @@
                 width: 150px;
                 height: 90px;
             }
-
-            .choice-container button {
-                font-size: 14px;
-                padding: 8px 16px;
-            }
         }
     </style>
 </head>
@@ -163,18 +138,8 @@
         <div class="ribbon" id="ribbon">Put Your Finger Here</div>
     </div>
 
-    <div class="choice-container" id="choice-container">
-        <button id="students-btn">Students</button>
-        <button id="teachers-btn">Teachers</button>
-    </div>
-
     <div class="invitation" id="students-invitation">
-        <img src="student invitation.png" alt="Students Invitation" class="invitation-img">
-        <button class="back-button" onclick="goBack()">Go Back</button>
-    </div>
-
-    <div class="invitation" id="teachers-invitation">
-        <img src="teacher invitation.jpg" alt="Teachers Invitation" class="invitation-img">
+        <img src="student invitation.png.jpg" alt="Students Invitation" class="invitation-img">
         <button class="back-button" onclick="goBack()">Go Back</button>
     </div>
 
@@ -184,9 +149,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             const curtain = document.getElementById('curtain');
             const envelope = document.getElementById('envelope');
-            const choiceContainer = document.getElementById('choice-container');
             const studentsInvitation = document.getElementById('students-invitation');
-            const teachersInvitation = document.getElementById('teachers-invitation');
             const balloonsContainer = document.getElementById('balloons');
 
             // Open the curtain after a short delay
@@ -197,28 +160,14 @@
             // Click event for the ribbon
             document.getElementById('ribbon').addEventListener('click', function() {
                 envelope.style.display = 'none';
-                choiceContainer.style.display = 'block';
-            });
-
-            // Students button click event
-            document.getElementById('students-btn').addEventListener('click', function() {
-                choiceContainer.style.display = 'none';
                 studentsInvitation.style.display = 'block';
-                releaseBalloons();
-            });
-
-            // Teachers button click event
-            document.getElementById('teachers-btn').addEventListener('click', function() {
-                choiceContainer.style.display = 'none';
-                teachersInvitation.style.display = 'block';
                 releaseBalloons();
             });
 
             // Go back function
             window.goBack = function() {
                 studentsInvitation.style.display = 'none';
-                teachersInvitation.style.display = 'none';
-                choiceContainer.style.display = 'block';
+                envelope.style.display = 'block';
                 balloonsContainer.innerHTML = ''; // Clear balloons
             };
 
